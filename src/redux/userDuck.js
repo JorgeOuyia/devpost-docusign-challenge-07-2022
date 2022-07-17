@@ -1,5 +1,4 @@
-import { async } from "@firebase/util";
-import { firebase } from "../firebase";
+import { firebase } from "../util/firebase";
 import { addNotification, NotificationType } from "../util/notification";
 
 const DATA_INICIAL = {
@@ -9,6 +8,7 @@ const DATA_INICIAL = {
 const LOADING_LOGIN = "LOADING_LOGIN";
 const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 const USER_LOGOFF_SUCCESS = "USER_LOGOFF_SUCCESS";
+const USER_CHANGE_PASSWORD_SUCCESS = 'USER_CHANGE_PASSWORD_SUCCESS';
 
 export default function userReducer(state = DATA_INICIAL, action) {
   let result = { ...state };
@@ -147,3 +147,31 @@ export const readUserAction = (user) => async (dispatch, getState) => {
     }
   }
 };
+
+export const changePasswordAction = (email, notificationList, setter) => async(dispatch, getState) => {
+  dispatch({
+    type: LOADING_LOGIN,
+    payload: true
+  });
+
+  try {
+    await firebase.sendPasswordResetEmail(email);
+    addNotification(notificationList, 'Email sent!', NotificationType.Success);
+    setter([...notificationList]);
+    dispatch({
+      type: USER_CHANGE_PASSWORD_SUCCESS
+    });
+  }
+  catch (error) {
+    console.log(error.code);
+    console.log(error.message);
+    addNotification(notificationList, error.message, NotificationType.Error);
+    setter([...notificationList]);
+  }
+  finally {
+    dispatch({
+      type: LOADING_LOGIN,
+      payload: false
+    })
+  }
+}

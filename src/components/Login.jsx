@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import ChangePassword from "./ChangePassword";
 import "./Login.css";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
@@ -7,7 +8,7 @@ import SignUpForm from "./SignUpForm";
 const LoginFormType = {
   SignIn: 0,
   SignUp: 1,
-  ForgotPassword: 2
+  ForgotPassword: 2,
 };
 
 const Login = () => {
@@ -52,7 +53,14 @@ const Login = () => {
 
                         <p className="mt-4 text-center">
                           Did you forget your password?
-                          <button type="button" className="btn btn-secondary ml-1" disabled={loading}>
+                          <button
+                            type="button"
+                            className="btn btn-secondary ml-1"
+                            disabled={loading}
+                            onClick={() =>
+                              setFormType(LoginFormType.ForgotPassword)
+                            }
+                          >
                             Click here
                           </button>
                         </p>
@@ -65,15 +73,29 @@ const Login = () => {
 
                         <p className="text-center fw-bold text-muted">OR</p>
 
-                        <div className="w-100">
-                          <button
-                            className="btn btn-primary btn-lg w-100"
-                            onClick={() => setFormType(LoginFormType.SignIn)}
-                            disabled={loading}
-                          >
-                            Sign in with your account
-                          </button>
-                        </div>
+                        <button
+                          className="btn btn-primary btn-lg w-100"
+                          onClick={() => setFormType(LoginFormType.SignIn)}
+                          disabled={loading}
+                        >
+                          Sign in with your account
+                        </button>
+                      </div>
+                    )}
+
+                    {formType === LoginFormType.ForgotPassword && (
+                      <div>
+                        <ChangePassword />
+
+                        <p className="text-center fw-bold text-muted">OR</p>
+
+                        <button
+                          className="btn btn-primary btn-lg w-100"
+                          disabled={loading}
+                          onClick={() => setFormType(LoginFormType.SignIn)}
+                        >
+                          Go back login
+                        </button>
                       </div>
                     )}
                   </div>

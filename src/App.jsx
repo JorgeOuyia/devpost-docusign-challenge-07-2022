@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom'
 import Login from './components/Login';
-import { firebase } from './firebase'
+import { firebase } from './util/firebase'
 import { logOffAction, readUserAction } from './redux/userDuck';
 
 function App() {

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore'
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth'
 
 
 const firebaseConfig = {
@@ -14,21 +14,16 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const firestore = getFirestore(app);
 const auth = getAuth(app);
 
 export const firebase = {
-
-    // getUsers: async() => {
-    //     const users = collection(db, 'users');
-    //     const data = await getDocs(users);
-    //     console.log(data.docs.map(doc => doc.data()));
-    // }
 
     onAuthStateChanged: (user) => onAuthStateChanged(auth, user),
     signInWithEmailAndPassword: (email, password) => signInWithEmailAndPassword(auth, email, password),
     signOut: () => signOut(auth),
     createUserWithEmailAndPassword: (email, password) => createUserWithEmailAndPassword(auth, email, password),
+    sendPasswordResetEmail: (email) => sendPasswordResetEmail(auth, email),
     createUser: async(uid, name, surnname, email) => {
         
         let result;
@@ -42,7 +37,7 @@ export const firebase = {
                 email
             }
 
-            const userDocRef = doc(db, 'users', uid);
+            const userDocRef = doc(firestore, 'users', uid);
             await setDoc(userDocRef, newUser);
 
             result = newUser;
@@ -58,7 +53,7 @@ export const firebase = {
         let result = null;
 
         try {
-            const userDocRef = doc(db, 'users', uid);
+            const userDocRef = doc(firestore, 'users', uid);
             const docSnap = await getDoc(userDocRef);
             if (docSnap.exists()) {
                 result = docSnap.data();

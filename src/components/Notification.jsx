@@ -10,7 +10,11 @@ const Notification = ({ notificationList }) => {
   return (
     <div>
       {notifications.map((notification, index) => (
-        <div className={`alert alert-${notification.type}`} key={index}>
+        <div
+          className={`alert alert-${notification.type}`}
+          role="alert"
+          key={index}
+        >
           {notification.message}
         </div>
       ))}
