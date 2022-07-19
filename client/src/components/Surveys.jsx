@@ -1,13 +1,19 @@
-import React from 'react'
+import React from "react";
+import { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 const Surveys = () => {
   return (
-    <div className='d-flex justify-content-between'>
-        <h2 className='mt-1'>My surveys</h2>
+    <Fragment>
+      <div className="d-flex justify-content-between">
+        <h2 className="mt-1">My surveys</h2>
 
-        <button type='button' className='btn btn-success btn-lg'>New survey</button>
-    </div>
-  )
-}
+        <Link to='/newsurvey' className="btn btn-success btn-lg">
+          New survey
+        </Link>
+      </div>
+    </Fragment>
+  );
+};
 
-export default Surveys
+export default Surveys;

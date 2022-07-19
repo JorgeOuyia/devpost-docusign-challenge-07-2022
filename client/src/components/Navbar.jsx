@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav className="navigationbar">
       <ul className="navigationbar-nav">
         <li className="logo">
-          <Link to="/home" exact className="navigation-link">
+          <Link to="/home" className="navigation-link">
             <span className="link-text" style={{ color: "white" }}>
               ArcValetSign
             </span>
@@ -26,7 +26,7 @@ const Navbar = () => {
         </li>
 
         <li className="navigation-item">
-          <Link to="/home" exact className="navigation-link">
+          <Link to="/home" className="navigation-link">
             <svg
               aria-hidden="true"
               focusable="false"

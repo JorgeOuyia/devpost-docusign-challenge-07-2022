@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import "./App.css";
 import Home from "./components/Home";
 import Surveys from "./components/Surveys";
+import NewSurvey from "./components/NewSurvey";
 
 function App() {
   const [firebaseUser, setFirebaseUser] = React.useState(null);
@@ -38,6 +39,7 @@ function App() {
         <Routes>
           <Route path="/home" exact element={<Home />}></Route>
           <Route path="/surveys" exact element={<Surveys />}></Route>
+          <Route path='/newSurvey' exact element={<NewSurvey />}></Route>
         </Routes>
       </div>
     </div>

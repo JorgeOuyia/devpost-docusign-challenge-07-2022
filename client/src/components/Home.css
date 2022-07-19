@@ -8,9 +8,17 @@
   border-radius: 10px;
   display: flex;
   flex-flow: row nowrap;
-  transition: all 0.2 ease;
+  transition: all 0.2s ease;
   text-decoration: none;
   margin-bottom: 2.5em;
+}
+
+.home-item:hover {
+  box-shadow: 0 0 10px 0 grey;
+}
+
+.home-item:hover h2 {
+  color: #94ba61;
 }
 
 .home-item-principal {
