@@ -1,0 +1,65 @@
+.home-item {
+  width: 100%;
+  min-width: 100%;
+  height: max-content;
+  min-height: 430px;
+  background-color: whitesmoke;
+  background-clip: border-box;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+  transition: all 0.2 ease;
+  text-decoration: none;
+  margin-bottom: 2.5em;
+}
+
+.home-item-principal {
+  text-align: center;
+  padding: 0 1em 1em 1em;
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 35%;
+  border-radius: 10px 0 0 10px;
+}
+
+.home-item-secondary {
+  width: 60%;
+  padding: 2em 2em 2em 2em;
+}
+
+.home-item-title {
+  margin-bottom: 2em;
+}
+
+.home-item-messages {
+  color: black;
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 830px) {
+    .home-item {
+        flex-flow: column nowrap;
+        min-height: 350px;
+    }
+
+    .home-item-principal {
+        width: 100%;
+        height: 250px;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .home-item-secondary {
+        width: 100% !important;
+    }
+
+    .home-item-title {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0;
+    }
+
+    .home-item-messages {
+        display: none;
+    }
+}
