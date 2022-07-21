@@ -40,7 +40,7 @@ const Surveys = () => {
             ? "There is no surveys"
             : surveyList.map((element, index) => (
                 <div
-                  className="col-lg-4 col-md-4 col-sm-12 col-xs-12 mb-4"
+                  className="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4"
                   key={index}
                 >
                   <SurveyCard

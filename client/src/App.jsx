@@ -9,6 +9,7 @@ import "./App.css";
 import Home from "./components/Home";
 import Surveys from "./components/Surveys";
 import NewSurvey from "./components/NewSurvey";
+import Connect from "./components/Connect";
 
 function App() {
   const [firebaseUser, setFirebaseUser] = React.useState(null);
@@ -40,6 +41,7 @@ function App() {
           <Route path="/home" exact element={<Home />}></Route>
           <Route path="/surveys" exact element={<Surveys />}></Route>
           <Route path="/newSurvey" exact element={<NewSurvey />}></Route>
+          <Route path="/connect" exact element={<Connect />}></Route>
         </Routes>
       </div>
     </div>

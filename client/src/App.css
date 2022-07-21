@@ -13,3 +13,19 @@
 .main-section h2, h3, h4, h5 {
   color: #198754;
 }
+
+.form-control:focus {
+  border-color: #94ba61;
+  box-shadow: 0 0 0 0.25rem rgb(148 186 97 / 25%);
+}
+
+.form-check-input:checked {
+  background-color: #94ba61;
+  border-color: #94ba61;
+}
+
+.form-check-input:focus {
+  border-color: #94ba61;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(148 186 97 / 25%);
+}

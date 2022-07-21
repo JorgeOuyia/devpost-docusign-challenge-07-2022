@@ -84,7 +84,7 @@ const SurveyCard = ({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div className="col-6">
               <label className="text-secondary">Camera trap test</label>
               <p className="card-text">
                 {trapTest ? (
@@ -94,7 +94,7 @@ const SurveyCard = ({
                 )}
               </p>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div className="col-6">
               <label className="text-secondary">Camera working</label>
               <p className="card-text">
                 {working ? (
