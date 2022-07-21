@@ -14,56 +14,18 @@ const Connect = () => {
                 </h2>
 
                 <div>
-                  <span className="badge rounded-pill bg-danger mt-3">
+                  <span className="badge rounded-pill bg-danger">
                     Not connected
                   </span>
                 </div>
               </div>
+              
+                    <p className="mt-4 car-text">
+                        In order to use all functionalities, you have to log in with your arcGIS account. This will let you send surveys and use maps.
+                    </p>
 
-              <div className="row mt-3">
-                <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                  <div className="form-floating mb-3">
-                    <input
-                      type="email"
-                      className="form-control"
-                      placeholder="name@example.com"
-                    />
-                    <label>
-                      Username <span className="text-danger">*</span>
-                    </label>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                  <div className="form-floating mb-3">
-                    <input
-                      type="email"
-                      className="form-control"
-                      placeholder="name@example.com"
-                    />
-                    <label>
-                      Password <span className="text-danger">*</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row mt-2">
-                <div className="col-12">
-                  <div className="form-check form-switch">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      role="switch"
-                    />
-                    <label className="form-check-label">
-                      Remember me for next time
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="d-flex flex-row-reverse mt-2">
-                <button type="button" className="btn btn-success">
+              <div className="d-flex justify-content-center mt-4">
+                <button type="button" className="btn btn-success btn-lg">
                   Connect
                 </button>
               </div>
@@ -80,10 +42,16 @@ const Connect = () => {
                 </h2>
 
                 <div>
-                  <span className="badge rounded-pill bg-success mt-3">
+                  <span className="badge rounded-pill bg-success">
                     Connected
                   </span>
                 </div>
+              </div>
+                <p className="mt-4">It is necessary to log in to your Docusign account for being able to send envelopes to stakeholders and obtain validation of some forms.</p>
+              <div className="d-flex justify-content-center mt-4">
+                <button type="button" className="btn btn-success btn-lg">
+                  Connect
+                </button>
               </div>
             </div>
           </div>
