@@ -1,0 +1,8 @@
+.survey-card {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.survey-card-map {
+    height: 280px;
+}

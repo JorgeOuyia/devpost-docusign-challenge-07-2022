@@ -2,7 +2,7 @@ import "./Navbar.css";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { logOffAction } from "../redux/userDuck";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useDispatch();

@@ -1,23 +1,21 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./NewSurvey.css";
 import { uuidv4 } from "@firebase/util";
 import { firebase } from "../util/firebase";
+import { WebMap } from "@esri/react-arcgis";
 
 const NewSurvey = () => {
   const user = useSelector((store) => store.user.user);
-
-  const now = new Date();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
+    const now = new Date();
     const webForm = new window.Survey123WebForm({
       clientId: "rtHacRn1FUxcB7II",
       container: "surveyForm",
       itemId: "cfea65c0165d4b0ba1a58770fc28b25d",
-      onFormLoaded: ({ form }) => {
-        console.log(form.questions);
-      },
       questionValue: {
         project_name: "ArcValetSign",
         your_name: `${user.name} ${user.surname}`,
@@ -31,10 +29,11 @@ const NewSurvey = () => {
           const survey = e.surveyFeatureSet;
           const answers = survey.features[0];
           await firebase.createSurvey(answers, user.uid);
+          navigate('/surveys');
         }
       },
     });
-  });
+  }, [navigate, user.name, user.surname, user.uid]);
 
   return (
     <Fragment>

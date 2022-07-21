@@ -12,7 +12,7 @@
   position: fixed;
   background-color: var(--bg-primary);
   transition: 200ms ease;
-  z-index: 1000;
+  z-index: 10000000;
 }
 
 .navigationbar-nav {

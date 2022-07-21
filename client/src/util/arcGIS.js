@@ -1,0 +1,1 @@
+export const TOKEN_API = 'AAPKe28481ca534c403d923142b94da890bcYewSeW7_f7ayo4uxtQc92sUdeNDeYQv0s5q3lNfBnxwTARFmJk1Q5hyFY-HldS7T';
