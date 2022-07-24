@@ -17,12 +17,12 @@ import {
 import { uuidv4 } from "@firebase/util";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBIaXKvNhEtUNd14gxNG8zgHqX-Ajetby8",
-  authDomain: "arc-valet-sign.firebaseapp.com",
-  projectId: "arc-valet-sign",
-  storageBucket: "arc-valet-sign.appspot.com",
-  messagingSenderId: "344479736640",
-  appId: "1:344479736640:web:d7a0e6aced3eb09ca050a5",
+  apiKey: "AIzaSyBHoPhl8Xz60EArp6yCgIoBW1fM4xNqpMc",
+  authDomain: "jgi-chimpanzees.firebaseapp.com",
+  projectId: "jgi-chimpanzees",
+  storageBucket: "jgi-chimpanzees.appspot.com",
+  messagingSenderId: "1024836977232",
+  appId: "1:1024836977232:web:00bab3b5d90cce49d58755",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -39,6 +39,7 @@ export const firebase = {
     createUserWithEmailAndPassword(auth, email, password),
   sendPasswordResetEmail: (email) => sendPasswordResetEmail(auth, email),
   createSurvey: async (survey, uid) => {
+    console.log('llamada a Firebase createSurvey!!');
     let result;
 
     try {
@@ -53,7 +54,7 @@ export const firebase = {
       const docToSave = { ...survey };
 
       await setDoc(userSurveyRef, {
-        surveyList: [...surveyList, docToSave]
+        surveyList: [...surveyList, docToSave],
       });
 
       result = { ...docToSave };
@@ -63,6 +64,7 @@ export const firebase = {
     }
   },
   createUser: async (uid, name, surname, email) => {
+    console.log('llamada a Firebase createUser!!');
     let result;
 
     try {
@@ -85,6 +87,7 @@ export const firebase = {
     return result;
   },
   getSurveyList: async (uid) => {
+    console.log('llamada a Firebase getSurveyList!!');
     let result = null;
 
     try {
@@ -92,6 +95,9 @@ export const firebase = {
       const docSnap = await getDoc(surveysRef);
       if (docSnap.exists()) {
         result = docSnap.data().surveyList;
+      }
+      else {
+        result = [];
       }
     } catch (error) {
       console.log(error);
@@ -101,6 +107,7 @@ export const firebase = {
     return result;
   },
   getUser: async (uid) => {
+    console.log('llamada a Firebase getUser!!');
     let result = null;
 
     try {
@@ -109,6 +116,21 @@ export const firebase = {
       if (docSnap.exists()) {
         result = docSnap.data();
       }
+    } catch (error) {
+      console.log(error);
+      result = null;
+    }
+
+    return result;
+  },
+  getSurvey: async (uid, objectId) => {
+    console.log('llamada a Firebase getSurvey!!');
+    let result = null;
+
+    try {
+      const surveyList = await firebase.getSurveyList(uid);
+
+      result = surveyList.find((t) => t.objectId === parseInt(objectId));
     } catch (error) {
       console.log(error);
       result = null;

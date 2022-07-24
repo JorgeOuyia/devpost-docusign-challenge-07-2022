@@ -32,12 +32,16 @@ const Surveys = () => {
 
       {loading ? (
         <div className="d-flex justify-content-center">
-          <div className="spinner-border"></div>
+          <div className="spinner-border text-success"></div>
         </div>
       ) : (
         <div className="row">
           {surveyList.length <= 0
-            ? "There is no surveys"
+            ? (<div className="d-flex justify-content-center">
+              <p className="text-danger">
+                There is no surveys yet
+              </p>
+            </div>)
             : surveyList.map((element, index) => (
                 <div
                   className="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4"
@@ -59,6 +63,7 @@ const Surveys = () => {
                       element.attributes.camera_working_when_you_left_or ===
                       "Yes"
                     }
+                    surveyId={element.objectId}
                   />
                 </div>
               ))}

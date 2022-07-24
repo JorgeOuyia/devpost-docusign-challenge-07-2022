@@ -9,6 +9,7 @@ const LOADING_LOGIN = "LOADING_LOGIN";
 const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 const USER_LOGOFF_SUCCESS = "USER_LOGOFF_SUCCESS";
 const USER_CHANGE_PASSWORD_SUCCESS = "USER_CHANGE_PASSWORD_SUCCESS";
+const USER_LOGIN_ARCGIS = "USER_LOGIN_ARCGIS";
 
 export default function userReducer(state = DATA_INICIAL, action) {
   let result = { ...state };
@@ -22,6 +23,9 @@ export default function userReducer(state = DATA_INICIAL, action) {
       break;
     case USER_LOGOFF_SUCCESS:
       result = { ...state, user: action.payload };
+      break;
+    case USER_LOGIN_ARCGIS:
+      result = { ...state, arcGIS: action.payload };
       break;
   }
 

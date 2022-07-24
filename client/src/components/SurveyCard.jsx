@@ -1,7 +1,7 @@
 import React from "react";
 import "./SurveyCard.css";
-import { ENUM_MAP_ARCGIS } from "../util/leaflet";
-import { TOKEN_API } from "../util/arcGIS";
+import { renderMap } from "../util/arcGIS";
+import { Link } from "react-router-dom";
 
 const SurveyCard = ({
   id,
@@ -12,60 +12,37 @@ const SurveyCard = ({
   date,
   trapTest,
   working,
+  surveyId,
 }) => {
   React.useEffect(() => {
-    const rnd = parseInt(
-      Math.min(
-        parseInt(Math.random() * ENUM_MAP_ARCGIS.length),
-        ENUM_MAP_ARCGIS.length - 1
-      )
-    );
-    const latlng = [latitude, longitude];
-    const map = window.L.map(`map_${id}`, {
-      minZoom: 2,
-      dragging: true,
-      zoomControl: true,
-      scrollWheelZoom: true,
-    }).setView(latlng, 8);
-    window.L.esri.Vector.vectorBasemapLayer(ENUM_MAP_ARCGIS[rnd], {
-      apiKey:
-        TOKEN_API,
-    }).addTo(map);
-
-    const icon = window.L.icon({
-      iconUrl:
-        "http://store-images.s-microsoft.com/image/apps.46703.14560072719906134.35713bf3-d456-450b-b4c7-d9db01972e59.587e4824-0f00-4b63-937a-e80e9d928e8c",
-      iconSize: [27, 31],
-      iconAnchor: [13.5, 17.5],
-      popupAnchor: [0, -11],
-    });
-
-    const marker = new window.L.Marker(latlng, {
-      icon: icon,
-    });
-    marker.addTo(map);
-
-    window.L.esri
-      .featureLayer({
-        url: "https://services8.arcgis.com/ihCDezBdWgamTypb/arcgis/rest/services/survey123_cfea65c0165d4b0ba1a58770fc28b25d/FeatureServer/0",
-        pointToLayer: (geojson, latlng) => {
-          return window.L.marker(
-            { lat: 34.02, long: -118.805 },
-            {
-              icon: icon,
-            }
-          );
-        },
-      })
-      .addTo(map);
+    renderMap(`map_${id}`, latitude, longitude, 8);
   }, [id, latitude, longitude]);
 
   return (
-    <div className="w-100 h-100 card">
+    <div className="w-100 h-100 card shadow-card-hoverable">
       <div className="survey-card">
         <div id={`map_${id}`} className="survey-card-map"></div>
         <div className="card-body">
-          <h4 className="card-title">{title}</h4>
+          <div className="d-flex justify-content-between">
+            <div>
+              <h4 className="card-title">{title}</h4>
+            </div>
+            <div>
+              <Link to={`/surveyInfo/${surveyId}`}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  width="30px"
+                  height="30px"
+                >
+                  <path
+                    d="M421.7 220.3L188.5 453.4L154.6 419.5L158.1 416H112C103.2 416 96 408.8 96 400V353.9L92.51 357.4C87.78 362.2 84.31 368 82.42 374.4L59.44 452.6L137.6 429.6C143.1 427.7 149.8 424.2 154.6 419.5L188.5 453.4C178.1 463.8 165.2 471.5 151.1 475.6L30.77 511C22.35 513.5 13.24 511.2 7.03 504.1C.8198 498.8-1.502 489.7 .976 481.2L36.37 360.9C40.53 346.8 48.16 333.9 58.57 323.5L291.7 90.34L421.7 220.3zM492.7 58.75C517.7 83.74 517.7 124.3 492.7 149.3L444.3 197.7L314.3 67.72L362.7 19.32C387.7-5.678 428.3-5.678 453.3 19.32L492.7 58.75z"
+                    fill="#03473d"
+                  />
+                </svg>
+              </Link>
+            </div>
+          </div>
           <div className="row mb-2">
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <label className="text-secondary">Date and Time</label>

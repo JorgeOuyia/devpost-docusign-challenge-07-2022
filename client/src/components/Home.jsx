@@ -5,23 +5,6 @@ import "./Home.css";
 const Home = () => {
   return (
     <div>
-      <Link to="/connect" className="home-item">
-        <div
-          className="home-item-principal"
-          style={{
-            backgroundImage: `url(https://www.pragma.com.co/hs-fs/hubfs/h_cloud_computing.jpg?width=1728&name=h_cloud_computing.jpg)`,
-          }}
-        ></div>
-        <div className="home-item-secondary">
-          <h2 className="home-item-title">Connect to services</h2>
-
-          <ul className="home-item-messages">
-            <li>Connect to ArcGIS services in order to use all functionalities related</li>
-            <li>Connect to Docusign services for sending envelopes</li>
-          </ul>
-        </div>
-      </Link>
-
       <Link to="/surveys" className="home-item">
         <div
           className="home-item-principal"
