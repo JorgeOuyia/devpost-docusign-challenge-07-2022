@@ -13,9 +13,9 @@ const NewSurvey = () => {
   React.useEffect(() => {
     const now = new Date();
     const webForm = new window.Survey123WebForm({
-      clientId: "rtHacRn1FUxcB7II",
+      clientId: "DPVovAjI8lNZTiBO",
       container: "surveyForm",
-      itemId: "cfea65c0165d4b0ba1a58770fc28b25d",
+      itemId: "47fe7da5044f42739d64105fa5d6d873",
       questionValue: {
         project_name: "ArcValetSign",
         your_name: `${user.name} ${user.surname}`,

@@ -1,7 +1,10 @@
 export var map = null;
 
 export const TOKEN_API =
-  "AAPKe28481ca534c403d923142b94da890bcYewSeW7_f7ayo4uxtQc92sUdeNDeYQv0s5q3lNfBnxwTARFmJk1Q5hyFY-HldS7T";
+  "AAPK6ed23630babd43b9a64481a4e576cfa1wDia-f_VFBGWwj3TSMaETcr_2QD138Pw8sMZiOlX4qkaqP6qAJsV-hJEH1VHnyWr";
+
+export const CLIENT_ID = "DPVovAjI8lNZTiBO";
+export const CLIENT_SECRET = "d989f684de884a0ba80e4b8b2a47f482";
 
 export const ENUM_MAP_ARCGIS = [
   "ArcGIS:Imagery",
@@ -142,4 +145,24 @@ export const renderMap = (
   }
 
   marker.addTo(map);
+};
+
+export const getAccessToken = async () => {
+  let result = null;
+
+  try {
+    const response = await fetch(
+      `https://www.arcgis.com/sharing/rest/oauth2/token?f=json&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&grant_type=client_credentials&expiration=20160`
+    );
+
+    const json = await response.json();
+
+    console.log(json.access_token);
+
+    result = json.access_token;
+  } catch (error) {
+    console.log(error);
+  }
+
+  return result;
 };

@@ -50,14 +50,14 @@
 }
 
 .navigation-link svg,
-img {
+.navigation-link img {
   min-width: 2rem;
   margin: 0 0.7rem;
   max-width: 2rem;
 }
 
 .navigationbar:hover svg,
-img {
+.navigation-link img {
   max-width: 2rem;
 }
 
