@@ -36,37 +36,37 @@ const Surveys = () => {
         </div>
       ) : (
         <div className="row">
-          {surveyList.length <= 0
-            ? (<div className="d-flex justify-content-center">
-              <p className="text-danger">
-                There is no surveys yet
-              </p>
-            </div>)
-            : surveyList.map((element, index) => (
-                <div
-                  className="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4"
-                  key={index}
-                >
-                  <SurveyCard
-                    id={index}
-                    latitude={element.geometry.y}
-                    longitude={element.geometry.x}
-                    title={element.attributes.camera_id}
-                    procedure={element.attributes._procedure}
-                    date={
-                      new Date(
-                        element.attributes.date_and_time_of_camera_setup_o
-                      )
-                    }
-                    trapTest={element.attributes.camera_trap_test === "Yes"}
-                    working={
-                      element.attributes.camera_working_when_you_left_or ===
-                      "Yes"
-                    }
-                    surveyId={element.objectId}
-                  />
-                </div>
-              ))}
+          {surveyList.length <= 0 ? (
+            <div className="d-flex justify-content-center">
+              <p className="text-danger">There is no surveys yet</p>
+            </div>
+          ) : (
+            surveyList.map((element, index) => (
+              <div
+                className="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4"
+                key={index}
+              >
+                <SurveyCard
+                  id={index}
+                  latitude={element.geometry.y}
+                  longitude={element.geometry.x}
+                  title={element.attributes.camera_id}
+                  procedure={element.attributes._procedure}
+                  date={
+                    new Date(element.attributes.date_and_time_of_camera_setup_o)
+                  }
+                  trapTest={element.attributes.camera_trap_test === "Yes"}
+                  working={
+                    element.attributes.camera_working_when_you_left_or === "Yes"
+                  }
+                  globalId={element.attributes.globalid
+                    .replace("{", "")
+                    .replace("}", "")}
+                  attachments={element.attachments}
+                />
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>

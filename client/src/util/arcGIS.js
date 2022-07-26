@@ -27,11 +27,12 @@ export const ENUM_MAP_ARCGIS = [
   "ArcGIS:Newspaper",
 ];
 
-export const renderMap = (
+export const renderMap = async (
   containerId,
   latitude,
   longitude,
   zoom,
+  attachments,
   selectLayer = false
 ) => {
   const latlng = [latitude, longitude];
@@ -145,6 +146,48 @@ export const renderMap = (
   }
 
   marker.addTo(map);
+  if (attachments.length > 0) {
+    const accessToken = await getAccessToken();
+
+    let images = "";
+    let cssClass = "";
+
+    for (let i = 0; i < attachments.length; i++) {
+      if (i === 0) {
+        cssClass = "active";
+      } else {
+        cssClass = "";
+      }
+
+      images += `<div class="carousel-item ${cssClass}" style='height: 210px; width: 100%; overflow-y: auto;'>
+        <div>
+          <img src="${attachments[i].objectUrl.replace(
+            "_fieldworker",
+            ""
+          )}?token=${accessToken}" class='d-block w-100' style='min-height: 210px; object-fit: cover;' />
+        </div>
+      </div>`;
+    }
+    const carousel = `<div style='width: 280px; height: 220px;'>
+      <div id="carousel_${containerId}" class="carousel slide" data-bs-ride="carousel" data-interval="false">
+      <div class="carousel-inner">
+        ${images}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carousel_${containerId}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carousel_${containerId}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+      </div>
+    </div>`;
+
+    marker.bindPopup(function (layer) {
+      return window.L.Util.template(carousel, layer);
+    });
+  }
 };
 
 export const getAccessToken = async () => {

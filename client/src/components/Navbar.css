@@ -133,4 +133,8 @@
   .navigation-item:last-child {
     margin-top: auto;
   }
+
+  .home-link {
+    display: none;
+  }
 }

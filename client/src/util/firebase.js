@@ -38,11 +38,12 @@ export const firebase = {
   createUserWithEmailAndPassword: (email, password) =>
     createUserWithEmailAndPassword(auth, email, password),
   sendPasswordResetEmail: (email) => sendPasswordResetEmail(auth, email),
-  createSurvey: async (survey, uid) => {
-    console.log('llamada a Firebase createSurvey!!');
+  saveSurvey: async (survey, uid) => {
+    console.log("llamada a Firebase createSurvey!!");
     let result;
 
     try {
+      debugger;
       let surveyList = await firebase.getSurveyList(uid);
 
       if (!surveyList) {
@@ -51,20 +52,33 @@ export const firebase = {
 
       const userSurveyRef = doc(firestore, "surveys", uid);
 
-      const docToSave = { ...survey };
+      const surveyToEdit = surveyList.find(
+        (t) =>
+          t.attributes.globalid
+            .replace("{", "")
+            .replace("}", "")
+            .toLowerCase() === survey.attributes.globalid.toLowerCase()
+      );
+
+      if (surveyToEdit) {
+        const index = surveyList.indexOf(surveyToEdit);
+        surveyList[index] = { ...survey };
+      } else {
+        surveyList.push({ ...survey });
+      }
 
       await setDoc(userSurveyRef, {
-        surveyList: [...surveyList, docToSave],
+        surveyList: surveyList,
       });
 
-      result = { ...docToSave };
+      result = { ...survey };
     } catch (error) {
       console.log(error);
       result = null;
     }
   },
   createUser: async (uid, name, surname, email) => {
-    console.log('llamada a Firebase createUser!!');
+    console.log("llamada a Firebase createUser!!");
     let result;
 
     try {
@@ -87,7 +101,7 @@ export const firebase = {
     return result;
   },
   getSurveyList: async (uid) => {
-    console.log('llamada a Firebase getSurveyList!!');
+    console.log("llamada a Firebase getSurveyList!!");
     let result = null;
 
     try {
@@ -95,8 +109,7 @@ export const firebase = {
       const docSnap = await getDoc(surveysRef);
       if (docSnap.exists()) {
         result = docSnap.data().surveyList;
-      }
-      else {
+      } else {
         result = [];
       }
     } catch (error) {
@@ -107,7 +120,7 @@ export const firebase = {
     return result;
   },
   getUser: async (uid) => {
-    console.log('llamada a Firebase getUser!!');
+    console.log("llamada a Firebase getUser!!");
     let result = null;
 
     try {
@@ -124,7 +137,7 @@ export const firebase = {
     return result;
   },
   getSurvey: async (uid, objectId) => {
-    console.log('llamada a Firebase getSurvey!!');
+    console.log("llamada a Firebase getSurvey!!");
     let result = null;
 
     try {

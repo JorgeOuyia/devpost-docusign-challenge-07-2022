@@ -18,11 +18,25 @@ const Home = () => {
           <ul className="home-item-messages">
             <li>Complete and send new surveys directly to ArcGIS Survey123</li>
             <li>Review the already sent surveys</li>
-            <li>
-              Integrate your survey with the camera trap images directly with
-              PowerForms
-            </li>
-            <li>Request validation for your surveys</li>
+            <li>Edit your surveys</li>
+          </ul>
+        </div>
+      </Link>
+
+      <Link to="/cameradata" className="home-item">
+        <div
+          className="home-item-principal"
+          style={{
+            backgroundImage: `url(https://www.pragma.com.co/hs-fs/hubfs/h_cloud_computing.jpg?width=1728&name=h_cloud_computing.jpg)`,
+          }}
+        ></div>
+        <div className="home-item-secondary">
+          <h2 className="home-item-title">Camera data</h2>
+
+          <ul className="home-item-messages">
+            <li>Upload camera trap images directly to MediaValet</li>
+            <li>Review the uploaded images</li>
+            <li>Image approval cycle</li>
           </ul>
         </div>
       </Link>
