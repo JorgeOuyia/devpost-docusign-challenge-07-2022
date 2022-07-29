@@ -53,7 +53,9 @@ const NewSurvey = () => {
             ? "New survey"
             : mode === "edit"
             ? "Edit survey"
-            : "View survey"}
+            : mode === "view"
+            ? "View survey"
+            : "Clone survey"}
         </h2>
         <Link to="/surveys" className="btn btn-danger btn-lg mb-4">
           Go back

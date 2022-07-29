@@ -43,7 +43,6 @@ export const firebase = {
     let result;
 
     try {
-      debugger;
       let surveyList = await firebase.getSurveyList(uid);
 
       if (!surveyList) {

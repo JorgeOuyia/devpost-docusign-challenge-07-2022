@@ -2,6 +2,8 @@ import React from "react";
 import "./SurveyCard.css";
 import { renderMap } from "../util/arcGIS";
 import { Link } from "react-router-dom";
+import { Button, Popover, Tooltip } from "bootstrap";
+import { OverlayTrigger } from "react-bootstrap";
 
 const SurveyCard = ({
   id,
@@ -13,7 +15,7 @@ const SurveyCard = ({
   trapTest,
   working,
   globalId,
-  attachments
+  attachments,
 }) => {
   React.useEffect(() => {
     renderMap(`map_${id}`, latitude, longitude, 8, attachments);
@@ -29,6 +31,20 @@ const SurveyCard = ({
               <h4 className="card-title">{title}</h4>
             </div>
             <div className="d-flex flex-row gap-2">
+              <Link to={`/newSurvey?globalid=${globalId}&mode=copy`}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  width="30px"
+                  height="30px"
+                >
+                  <path
+                    d="M384 96L384 0h-112c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48H464c26.51 0 48-21.49 48-48V128h-95.1C398.4 128 384 113.6 384 96zM416 0v96h96L416 0zM192 352V128h-144c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48h192c26.51 0 48-21.49 48-48L288 416h-32C220.7 416 192 387.3 192 352z"
+                    fill="#03473d"
+                  />
+                </svg>
+              </Link>
+
               <Link to={`/newSurvey?globalid=${globalId}&mode=edit`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -61,9 +77,7 @@ const SurveyCard = ({
             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <label className="text-secondary">Date and Time</label>
               <p className="card-title">
-                <strong>{`${date.getDate()}/${
-                  date.getMonth() + 1
-                }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`}</strong>
+                <strong>{date.toLocaleString()}</strong>
               </p>
             </div>
 

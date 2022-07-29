@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { firebase } from "../util/firebase";
 import SurveyCard from "./SurveyCard";
 import { TOKEN_API } from "../util/arcGIS";
+import Loading from "./Loading";
 
 const Surveys = () => {
   const user = useSelector((store) => store.user.user);
@@ -31,9 +32,7 @@ const Surveys = () => {
       </div>
 
       {loading ? (
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border text-success"></div>
-        </div>
+        <Loading />
       ) : (
         <div className="row">
           {surveyList.length <= 0 ? (
