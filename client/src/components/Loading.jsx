@@ -1,9 +1,9 @@
 import React from "react";
 
-const Loading = () => {
+const Loading = ({ type = 'success' }) => {
   return (
     <div className="d-flex justify-content-center">
-      <div className="spinner-grow text-success"></div>
+      <div className={`spinner-grow text-${type}`}></div>
     </div>
   );
 };

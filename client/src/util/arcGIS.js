@@ -1,3 +1,7 @@
+import { uuidv4 } from "@firebase/util";
+import { firebase } from "./firebase";
+import { timer } from "./timer";
+
 export var map = null;
 
 export const TOKEN_API =
@@ -71,70 +75,70 @@ export const renderMap = async (
       "ArcGIS:Imagery": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:Imagery",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:LightGray": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:LightGray",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:DarkGray": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:DarkGray",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:Navigation": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:Navigation",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:NavigationNight": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:NavigationNight",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:Streets": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:Streets",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:StreetsNight": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:StreetsNight",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:StreetsRelief": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:StreetsRelief",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:Topographic": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:Topographic",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:Oceans": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:Oceans",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:Terrain": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:Terrain",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:Community": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:Community",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:ColoredPencil": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:ColoredPencil",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:Nova": window.L.esri.Vector.vectorBasemapLayer("ArcGIS:Nova", {
         apiKey: TOKEN_API,
-      }).addTo(map),
+      }),
       "ArcGIS:ModernAntique": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:ModernAntique",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:Midcentury": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:Midcentury",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:Newspaper": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:Newspaper",
         { apiKey: TOKEN_API }
-      ).addTo(map),
+      ),
       "ArcGIS:ChartedTerritory": window.L.esri.Vector.vectorBasemapLayer(
         "ArcGIS:ChartedTerritory",
         { apiKey: TOKEN_API }
@@ -199,13 +203,121 @@ export const getAccessToken = async () => {
     );
 
     const json = await response.json();
-
-    console.log(json.access_token);
-
     result = json.access_token;
   } catch (error) {
     console.log(error);
   }
+
+  return result;
+};
+
+// TODO : Move this to server to hide credentials from public part or make users login before they can use this functionality
+export const generateToken = async (
+  referer = "https://survey123.arcgis.com"
+) => {
+  let result = null;
+
+  try {
+    const response = await fetch(
+      "https://www.arcgis.com/sharing/rest/generateToken",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          username: "jsendarrubiasarcGIS",
+          password: "jsendarrubias1",
+          client: "referer",
+          f: "pjson",
+          referer: referer,
+        }),
+      }
+    );
+
+    const json = await response.json();
+
+    result = json.token;
+  } catch (error) {
+    console.log(error);
+    result = null;
+  }
+
+  return result;
+};
+
+export const generatePDF = async (cameraId, uid) => {
+  let result = null;
+
+  const reportApiUrl = "https://survey123.arcgis.com/api/featureReport";
+  const featureLayerUrl =
+    "https://services7.arcgis.com/yKod5VvYOVxDmMkW/arcgis/rest/services/survey123_47fe7da5044f42739d64105fa5d6d873/FeatureServer/0";
+  const surveyId = "47fe7da5044f42739d64105fa5d6d873";
+  const templateId = "48d558d2be9c44aa91ffcf9270fa80d2";
+  const token = await generateToken();
+
+  const surveyList = (await firebase.getSurveyList(uid)).filter(
+    (t) => t.attributes.camera_id === cameraId
+  );
+
+  const data = new FormData();
+
+  data.append("f", "json");
+  data.append("portalUrl", "https://www.arcgis.com");
+  data.append(
+    "queryParameters",
+    `{"objectIds":"${surveyList.map((t) => t.objectId).toString()}"}`
+  );
+  data.append("templateItemId", templateId);
+  data.append("surveyItemId", surveyId);
+  data.append("featureLayerUrl", featureLayerUrl);
+  data.append("outputFormat", "pdf");
+  data.append("token", token);
+  data.append("mergeFiles", surveyList.length > 1 ? "nextPage" : "none");
+
+  const createReport = await fetch(`${reportApiUrl}/createReport/submitJob`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams(data),
+  });
+
+  const jsonCreateReport = await createReport.json();
+
+  const jobId = jsonCreateReport.jobId;
+
+  let generated = false;
+
+  do {
+    const queryJob = await fetch(
+      `${reportApiUrl}/jobs/${jobId}?token=${token}&f=json`,
+      {
+        method: "GET",
+      }
+    );
+
+    const jsonQueryJob = await queryJob.json();
+    console.log(jsonQueryJob);
+
+    const status = jsonQueryJob.jobStatus;
+
+    if (
+      status == "esriJobSucceeded" ||
+      status == "esriJobPartialSucceeded" ||
+      status == "esriJobFailed"
+    ) {
+      generated = true;
+      if (status === "esriJobSucceeded") {
+        const pdfUrl = jsonQueryJob.resultInfo.resultFiles[0].url;
+        const report = await fetch(pdfUrl);
+
+        result = await report.arrayBuffer();
+      }
+    } else {
+      await timer(3000);
+    }
+  } while (!generated);
 
   return result;
 };
